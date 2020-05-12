@@ -5,6 +5,16 @@ public class LinkedList {
 	private int size;
 	private Node head;
 
+	
+	public LinkedList() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public LinkedList(Node node) {
+		this.head = node;
+	}
+
 	void add(int data) {
 		Node node = new Node(data);
 		if (head == null) {
@@ -187,4 +197,9 @@ public class LinkedList {
 			head.setNext(null);
 		}
 	}
+
+	public Node getHead() {
+		return head;
+	}
+
 }
