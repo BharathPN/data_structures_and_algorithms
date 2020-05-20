@@ -1,27 +1,25 @@
 package com.tutorials.linkedlist;
 
-public class LinkedList {
+public class LinkedList<T> {
 
 	private int size;
-	private Node head;
+	private Node<T> head;
 
-	
 	public LinkedList() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public LinkedList(Node node) {
+	public LinkedList(Node<T> node) {
 		this.head = node;
 	}
 
-	void add(int data) {
-		Node node = new Node(data);
+	void add(T data) {
+		Node<T> node = new Node<T>(data);
 		if (head == null) {
 			head = node;
 			size++;
 		} else {
-			Node temp = head;
+			Node<T> temp = head;
 			while (temp.getNext() != null) {
 				temp = temp.getNext();
 			}
@@ -31,7 +29,7 @@ public class LinkedList {
 	}
 
 	void traverse() {
-		Node temp = head;
+		Node<T> temp = head;
 		while (temp != null) {
 			System.out.print(temp.getData() + " ");
 			temp = temp.getNext();
@@ -42,18 +40,18 @@ public class LinkedList {
 		return size;
 	}
 
-	void delete(int data) {
+	void delete(T data) {
 		if (head == null) {
 			System.out.println("No Elements are there to delete");
-		} else if (head.getData() == data) {
-			Node temp = head;
+		} else if (head.getData().equals(data)) {
+			Node<T> temp = head;
 			head = temp.getNext();
 			temp.setNext(null);
 		} else {
-			Node prev = head;
-			Node cur = head.getNext();
+			Node<T> prev = head;
+			Node<T> cur = head.getNext();
 			while (cur != null) {
-				if (cur.getData() == data) {
+				if (cur.getData().equals(data)) {
 					prev.setNext(cur.getNext());
 					cur.setNext(null);
 					return;
@@ -69,9 +67,9 @@ public class LinkedList {
 		}
 	}
 
-	int findMiddle() {
-		Node slow = head;
-		Node fast = head;
+	T findMiddle() {
+		Node<T> slow = head;
+		Node<T> fast = head;
 
 		while (fast != null && fast.getNext() != null) {
 			slow = slow.getNext();
@@ -84,8 +82,8 @@ public class LinkedList {
 		if (k <= 0) {
 			System.out.println("Please provide proper value");
 		} else {
-			Node slow = head;
-			Node fast = head;
+			Node<T> slow = head;
+			Node<T> fast = head;
 			int index = 0;
 			while (fast != null && index < k - 1) {
 				fast = fast.getNext();
@@ -107,7 +105,7 @@ public class LinkedList {
 	}
 
 	void findEvenOrOdd() {
-		Node fast = head;
+		Node<T> fast = head;
 
 		while (fast != null && fast.getNext() != null) {
 			fast = fast.getNext().getNext();
@@ -124,7 +122,7 @@ public class LinkedList {
 		System.out.println("head : " + head);
 	}
 
-	private void printRev(Node head) {
+	private void printRev(Node<T> head) {
 		if (head == null) {
 			return;
 		} else {
@@ -140,14 +138,14 @@ public class LinkedList {
 		} else if (head.getNext() == null) {
 			System.out.println("Only one element cannot reverse");
 		} else if (head.getNext().getNext() == null) {
-			Node tmp = head.getNext();
+			Node<T> tmp = head.getNext();
 			tmp.setNext(head);
 			head.setNext(null);
 			head = tmp;
 		} else {
-			Node prev = head;
-			Node cur = head.getNext();
-			Node next = head.getNext().getNext();
+			Node<T> prev = head;
+			Node<T> cur = head.getNext();
+			Node<T> next = head.getNext().getNext();
 			while (next != null) {
 				cur.setNext(prev);
 				prev = cur;
@@ -160,35 +158,35 @@ public class LinkedList {
 		}
 	}
 
-	void insertInAscending(int data) {
-		Node n = new Node(data);
-		++size;
-		if (head == null) {
-			head = n;
-			return;
-		} else if (head.getData() > n.getData()) {
-			n.setNext(head);
-			head = n;
-			return;
-		} else {
-			Node tmp = head;
-			Node prev = tmp;
-			Node cur = null;
-			while (tmp != null && tmp.getData() < n.getData()) {
-				prev = tmp;
-				tmp = tmp.getNext();
-				cur = tmp;
-			}
-			prev.setNext(n);
-			n.setNext(cur);
-		}
-	}
+//	void insertInAscending(T data) {
+//		Node<T> n = new Node<T>(data);
+//		++size;
+//		if (head == null) {
+//			head = n;
+//			return;
+//		} else if (head.getData() > n.getData()) {
+//			n.setNext(head);
+//			head = n;
+//			return;
+//		} else {
+//			Node tmp = head;
+//			Node prev = tmp;
+//			Node cur = null;
+//			while (tmp != null && tmp.getData() < n.getData()) {
+//				prev = tmp;
+//				tmp = tmp.getNext();
+//				cur = tmp;
+//			}
+//			prev.setNext(n);
+//			n.setNext(cur);
+//		}
+//	}
 	
 	void deleteAllOccurences() {
 		deleteNode(head);
 	}
 
-	private void deleteNode(Node head) {
+	private void deleteNode(Node<T> head) {
 		if (head == null) {
 			return;
 		} else {
@@ -198,7 +196,7 @@ public class LinkedList {
 		}
 	}
 
-	public Node getHead() {
+	public Node<T> getHead() {
 		return head;
 	}
 

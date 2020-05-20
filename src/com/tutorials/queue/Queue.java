@@ -1,13 +1,13 @@
 package com.tutorials.queue;
 
-public class Queue {
+public class Queue<T> {
 
-	private Node front;
-	private Node rear;
+	private Node<T> front;
+	private Node<T> rear;
 	private int size;
 	
-	public void enqueue(int data) {
-		Node n = new Node(data);
+	public void enqueue(T data) {
+		Node<T> n = new Node<T>(data);
 		if (front == null && rear == null) {
 			front = rear = n;
 			size++;
@@ -18,11 +18,11 @@ public class Queue {
 		}
 	}
 	
-	public int dequeue() {
+	public T dequeue() {
 		if (front == null) {
-			 return -1;
+			 return null;
 		} else {
-			Node tmp = front;
+			Node<T> tmp = front;
 			if (front == rear) {
 				front = rear = null;
 			} else {

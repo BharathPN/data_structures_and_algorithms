@@ -1,12 +1,12 @@
 package com.tutorials.stack;
 
-public class Stack {
+public class Stack<T> {
 
 	private int size;
-	private Node top;
+	private Node<T> top;
 	
-	public void push(int data) {
-		Node n = new Node(data);
+	public void push(T data) {
+		Node<T> n = new Node<T>(data);
 		if (top == null) {
 			top = n;
 			size++;
@@ -17,11 +17,11 @@ public class Stack {
 		}
 	}
 	
-	public int pop() {
+	public T pop() {
 		if (top == null) {
-			return -1;
+			return null;
 		} else {
-			Node tmp = top;
+			Node<T> tmp = top;
 			top = top.getNext();
 			tmp.setNext(null);
 			--size;
@@ -29,9 +29,9 @@ public class Stack {
 		}
 	}
 	
-	public int peek() {
+	public T peek() {
 		if (top == null) {
-			return -1;
+			return null;
 		} else {
 			return top.getData();
 		}

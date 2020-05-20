@@ -2,20 +2,20 @@ package com.tutorials.stack;
 
 import com.tutorials.queue.Queue;
 
-public class StackUsingQueue {
+public class StackUsingQueue<T> {
 
-	private Queue queue1 = new Queue();
-	private Queue queue2 = new Queue();
+	private Queue<T> queue1 = new Queue<T>();
+	private Queue<T> queue2 = new Queue<T>();
 	private int size;
 
-	public void push(int data) {
+	public void push(T data) {
 		queue1.enqueue(data);
 		size++;
 	}
 
-	public int pop() {
+	public T pop() {
 		if (isEmpty()) {
-			return -1;
+			return null;
 		} else {
 			if (queue2.isEmpty()) {
 				while (!queue1.isEmpty()) {
