@@ -1,6 +1,8 @@
 package com.tutorials.linkedlist;
 
-public class LinkedList<T> {
+import java.util.Iterator;
+
+public class LinkedList<T> implements Iterable<T> {
 
 	private int size;
 	private Node<T> head;
@@ -181,7 +183,7 @@ public class LinkedList<T> {
 //			n.setNext(cur);
 //		}
 //	}
-	
+
 	void deleteAllOccurences() {
 		deleteNode(head);
 	}
@@ -200,4 +202,62 @@ public class LinkedList<T> {
 		return head;
 	}
 
+	@Override
+	public Iterator<T> iterator() {
+		return new LinkedListIterator<T>();
+	}
+
+	public void createALoop(int pos) {
+		Node<T> tmp = head;
+		while (tmp.getNext() != null) {
+			tmp = tmp.getNext();
+		}
+		Node<T> tmp2 = head;
+		for (int i = 1; i < pos; i++) {
+			tmp2 = tmp2.getNext();
+		}
+		tmp.setNext(tmp2);
+	}
+
+	public void findWetherLoopExist() {
+		if (head == null) {
+			System.out.println("Loop doesn't exist");
+			return;
+		} else {
+			Node<T> fast = head;
+			Node<T> slow = head;
+			while (fast != null && fast.getNext() != null) {
+				fast = fast.getNext().getNext();
+				slow = slow.getNext();
+				if (fast == slow) {
+					System.out.println("Loop exist");
+					return;
+				}
+			}
+			System.out.println("Loop doesn't exist");
+			return;
+		}
+	}
+
+	public T findStartingPointOfLoop() throws Exception {
+		if (head == null) {
+			throw new Exception("Loop doesn't exist");
+		} else {
+			Node<T> fast = head;
+			Node<T> slow = head;
+			while (fast != null && fast.getNext() != null) {
+				fast = fast.getNext().getNext();
+				slow = slow.getNext();
+				if (fast == slow) {
+					slow = head;
+					while (fast != slow) {
+						fast = fast.getNext();
+						slow = slow.getNext();
+					}
+					return fast.getData();
+				}
+			}
+			throw new Exception("Loop doesn't exist");
+		}
+	}
 }
