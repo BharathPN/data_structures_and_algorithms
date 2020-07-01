@@ -234,4 +234,24 @@ public class BinaryTree {
 			return newNode;
 		}
 	}
+
+	public int getDiameter() {
+		DiaHeight diaHeight = new DiaHeight(0, 0);
+		DiaHeight dh = getDiameter(root, diaHeight);
+		return dh.getDiameter();
+	}
+
+	private DiaHeight getDiameter(Node root, DiaHeight diaHeight) {
+		if (root == null) {
+			return diaHeight;
+		} else {
+			DiaHeight left = getDiameter(root.getLeft(), diaHeight);
+			DiaHeight right = getDiameter(root.getRight(), diaHeight);
+
+			int curDia = left.getHeight() + right.getHeight() + 1;
+			diaHeight.setDiameter(Math.max(curDia, Math.max(left.getDiameter(), right.getDiameter())));
+			diaHeight.setHeight(1 + Math.max(left.getHeight(), right.getHeight()));
+			return diaHeight;
+		}
+	}
 }

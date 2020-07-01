@@ -80,7 +80,7 @@ public class LinkedList<T> implements Iterable<T> {
 		return slow.getData();
 	}
 
-	void findKthElement(int k) {
+	void printKthElementFromLast(int k) {
 		if (k <= 0) {
 			System.out.println("Please provide proper value");
 		} else {
@@ -171,16 +171,12 @@ public class LinkedList<T> implements Iterable<T> {
 //			head = n;
 //			return;
 //		} else {
-//			Node tmp = head;
-//			Node prev = tmp;
-//			Node cur = null;
-//			while (tmp != null && tmp.getData() < n.getData()) {
-//				prev = tmp;
-//				tmp = tmp.getNext();
-//				cur = tmp;
+//			Node<T> cur = head;
+//			while (cur.getNext() != null && cur.getData() <= n.getData()) {
+//				cur = cur.getNext();
 //			}
-//			prev.setNext(n);
-//			n.setNext(cur);
+//			n.setNext(cur.getNext());
+//			cur.setNext(n);
 //		}
 //	}
 
