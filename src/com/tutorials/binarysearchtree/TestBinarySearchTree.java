@@ -15,7 +15,7 @@ public class TestBinarySearchTree {
 //		System.out.println(binarySearchTree.contains(99));
 		binarySearchTree.inOrderTraversal();
 		System.out.println();
-		System.out.println(binarySearchTree.findKthLargestElement(7));
+//		System.out.println(binarySearchTree.findKthLargestElement(7));
 //		
 //		binarySearchTree.delete(50);
 //		System.out.println();

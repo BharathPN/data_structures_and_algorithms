@@ -2,9 +2,9 @@ package com.tutorials.tree;
 
 public class Node {
 
-	private int data;
-	private Node left;
-	private Node right;
+	int data;
+	Node left;
+	Node right;
 
 	public Node(int data) {
 		super();

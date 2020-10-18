@@ -14,8 +14,7 @@ public class BinarySearchTree {
 	private Node insert(Node root, int data) {
 		if (root == null) {
 			Node n = new Node(data);
-			root = n;
-			return root;
+			return n;
 		} else {
 			if (data < root.getData()) {
 				Node left = insert(root.getLeft(), data);
@@ -131,16 +130,16 @@ public class BinarySearchTree {
 		return node.getLeft() == null && node.getRight() == null;
 	}
 
-	public int findKthLargestElement(int k) {
+	public int findKthSmallestElement(int k) {
 		count = 0;
-		return findKthLargestElement(root, k);
+		return findKthSmallestElement(root, k);
 	}
 
-	private int findKthLargestElement(Node root, int k) {
+	private int findKthSmallestElement(Node root, int k) {
 		if (root == null) {
 			return -1;
 		} else {
-			int left = findKthLargestElement(root.getLeft(), k);
+			int left = findKthSmallestElement(root.getLeft(), k);
 			if (left != -1) {
 				return left;
 			}
@@ -150,7 +149,7 @@ public class BinarySearchTree {
 				count++;
 			}
 
-			int right = findKthLargestElement(root.getRight(), k);
+			int right = findKthSmallestElement(root.getRight(), k);
 			return right;
 		}
 	}

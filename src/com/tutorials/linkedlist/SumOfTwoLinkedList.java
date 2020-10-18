@@ -9,10 +9,10 @@ public class SumOfTwoLinkedList {
 		list1.add(8);
 		list1.add(6);
 		LinkedList<Integer> list2 = new LinkedList<Integer>();
-		list2.add(8);
-		list2.add(7);
-		list2.add(4);
 		list2.add(5);
+		list2.add(8);
+		list2.add(4);
+		list2.add(7);
 		LinkedList<Integer> result = addLists(list1, list2);
 		result.traverse();
 	}

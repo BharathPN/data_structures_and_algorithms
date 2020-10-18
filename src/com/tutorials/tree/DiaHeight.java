@@ -3,11 +3,12 @@ package com.tutorials.tree;
 public class DiaHeight {
 
 	private int height;
-	private int diameter;
+	private int maxDia;
 
-	public DiaHeight(int i, int j) {
-		this.height = i;
-		this.diameter = j;
+	public DiaHeight(int height, int maxDia) {
+		super();
+		this.height = height;
+		this.maxDia = maxDia;
 	}
 
 	public int getHeight() {
@@ -18,12 +19,12 @@ public class DiaHeight {
 		this.height = height;
 	}
 
-	public int getDiameter() {
-		return diameter;
+	public int getMaxDia() {
+		return maxDia;
 	}
 
-	public void setDiameter(int diameter) {
-		this.diameter = diameter;
+	public void setMaxDia(int maxDia) {
+		this.maxDia = maxDia;
 	}
 
 }

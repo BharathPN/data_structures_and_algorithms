@@ -19,8 +19,17 @@ public class QuickSort {
 			quickSort(arr, partitionIndex + 1, end);
 		}
 	}
-
+	
 	private static int partition(int[] arr, int start, int end) {
+		
+		int randPI = ((start) + ((int)((Math.random()*(end-start+1)))));
+		//Swap a[low] and a[randPI]
+		if(end != randPI) {
+			arr[end] ^= arr[randPI];
+			arr[randPI] ^= arr[end];
+			arr[end] ^= arr[randPI];
+		}
+
 		int pivot = arr[end];
 		int partitionIndex = start;
 		for (int i = start; i < end; i++) {

@@ -14,7 +14,7 @@ public class AugmentedBinarySearchTree {
 		if (root == null) {
 			AugmentedNode n = new AugmentedNode(data);
 			root = n;
-		} else {
+ 		} else {
 			if (data < root.getData()) {
 				AugmentedNode left = insert(root.getLeft(), data);
 				root.setLeft(left);

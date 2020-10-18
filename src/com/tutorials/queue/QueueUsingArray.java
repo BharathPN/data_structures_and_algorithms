@@ -16,10 +16,14 @@ public class QueueUsingArray {
 			return;
 		} else if (isEmpty()) {
 			front = (front + 1) % arr.length;
+			rear = (rear + 1) % arr.length;
+			arr[rear] = data;
+			size++;
+		} else {
+			rear = (rear + 1) % arr.length;
+			arr[rear] = data;
+			size++;			
 		}
-		rear = (rear + 1) % arr.length;
-		arr[rear] = data;
-		size++;
 	}
 
 	public int dequeue() {

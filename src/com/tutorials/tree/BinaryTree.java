@@ -4,8 +4,9 @@ import com.tutorials.queue.Queue;
 
 public class BinaryTree {
 
-	private int size;
+	int size;
 	private Node root;
+	int diameter;
 
 	public BinaryTree(Node newRoot) {
 		this.root = newRoot;
@@ -44,9 +45,12 @@ public class BinaryTree {
 	}
 
 	public void levelOrderTraversal() {
+
 		Queue<Node> queue = new Queue<Node>();
 		Node tmp = root;
-		queue.enqueue(tmp);
+		if (tmp != null) {
+			queue.enqueue(tmp);
+		}
 		while (!queue.isEmpty()) {
 			tmp = queue.dequeue();
 			System.out.print(tmp.getData() + " ");
@@ -57,6 +61,7 @@ public class BinaryTree {
 				queue.enqueue(tmp.getRight());
 			}
 		}
+		System.out.println();
 	}
 
 	public void preOrderTraversal(Node node) {
@@ -121,27 +126,27 @@ public class BinaryTree {
 		}
 	}
 
-	public void deleteAllOccurances() {
-		deleteNode(root);
-		root = null;
-	}
-
-	private void deleteNode(Node node) {
-		if (node == null) {
-			return;
-		} else {
-			deleteNode(node.getLeft());
-
-			deleteNode(node.getRight());
-
-			if (node.getLeft() != null) {
-				node.setLeft(null);
-			}
-			if (node.getRight() != null) {
-				node.setRight(null);
-			}
-		}
-	}
+//	public void deleteAllOccurances() {
+//		deleteNode(root);
+//		root = null;
+//	}
+//
+//	private void deleteNode(Node node) {
+//		if (node == null) {
+//			return;
+//		} else {
+//			deleteNode(node.getLeft());
+//
+//			deleteNode(node.getRight());
+//
+//			if (node.getLeft() != null) {
+//				node.setLeft(null);
+//			}
+//			if (node.getRight() != null) {
+//				node.setRight(null);
+//			}
+//		}
+//	}
 
 	public void printBoundry() {
 		printLeft(root);
@@ -197,7 +202,12 @@ public class BinaryTree {
 		if (node == null) {
 			return 0;
 		} else {
-			return getSize(node.getLeft()) + getSize(node.getRight()) + 1;
+			// size of left sub tree
+			int a = getSize(node.getLeft());
+			// size of right sub tree
+			int b = getSize(node.getRight());
+
+			return a + b + 1;
 		}
 	}
 
@@ -211,7 +221,13 @@ public class BinaryTree {
 		} else if (isLeaf(node)) {
 			return 0;
 		} else {
-			return 1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight()));
+			// height of left sub tree
+			int a = getHeight(node.getLeft());
+
+			// height of right sub tree
+			int b = getHeight(node.getRight());
+
+			return 1 + Math.max(a, b);
 		}
 	}
 
@@ -235,23 +251,302 @@ public class BinaryTree {
 		}
 	}
 
-	public int getDiameter() {
-		DiaHeight diaHeight = new DiaHeight(0, 0);
-		DiaHeight dh = getDiameter(root, diaHeight);
-		return dh.getDiameter();
+	public void deleteTree() {
+		deleteTree(root);
+		root = null;
 	}
 
-	private DiaHeight getDiameter(Node root, DiaHeight diaHeight) {
+	private void deleteTree(Node root) {
 		if (root == null) {
-			return diaHeight;
+			return;
+		} else if (isLeaf(root)) {
+			return;
 		} else {
-			DiaHeight left = getDiameter(root.getLeft(), diaHeight);
-			DiaHeight right = getDiameter(root.getRight(), diaHeight);
 
-			int curDia = left.getHeight() + right.getHeight() + 1;
-			diaHeight.setDiameter(Math.max(curDia, Math.max(left.getDiameter(), right.getDiameter())));
-			diaHeight.setHeight(1 + Math.max(left.getHeight(), right.getHeight()));
-			return diaHeight;
+			deleteTree(root.getLeft());
+			deleteTree(root.getRight());
+
+			if (root.getLeft() != null) {
+				root.setLeft(null);
+			}
+			if (root.getRight() != null) {
+				root.setRight(null);
+			}
+			return;
+		}
+	}
+
+	public boolean contains(int data, BinaryTree tree) {
+		return contains(data, tree.root);
+	}
+
+	private boolean contains(int data, Node root) {
+		if (root == null) {
+			return false;
+		} else if (root.getData() == data) {
+			return true;
+		} else {
+			boolean left = contains(data, root.getLeft());
+			if (left) {
+				return left;
+			}
+			boolean right = contains(data, root.getRight());
+			return right;
+
+			// here we are traversing every node in the tree
+//			return left || right;
+		}
+	}
+
+	public boolean containsV2(int data, BinaryTree tree) {
+		return containsV2(data, tree.root);
+	}
+
+	private boolean containsV2(int data, Node root) {
+		if (root == null) {
+			return false;
+		} else if (root.data == data) {
+			return true;
+		} else {
+			return containsV2(data, root.left) || containsV2(data, root.right);
+		}
+	}
+
+	public boolean printAnscetors(int data) {
+		return printAnscetors(data, root);
+	}
+
+	private boolean printAnscetors(int data, Node root) {
+		if (root == null) {
+			return false;
+		} else if (root.data == data) {
+			return true;
+		} else {
+			boolean left = printAnscetors(data, root.left);
+			if (left) {
+				System.out.print(root.data + " ");
+				return left;
+			}
+			boolean right = printAnscetors(data, root.right);
+			if (right) {
+				System.out.println(root.data + " ");
+				return right;
+			}
+			return right;
+		}
+	}
+
+	public boolean printAllAnscestors(int data) {
+		return printAllAnscestors(data, root);
+	}
+
+	private boolean printAllAnscestors(int data, Node root) {
+		if (root == null) {
+			return false;
+		} else if ((root.data == data) || printAllAnscestors(data, root.left) || printAllAnscestors(data, root.right)) {
+			if (root.data != data) {
+				System.out.print(root.data + " ");
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int printLevel(int data) {
+		return printLevel(data, root);
+	}
+
+	private int printLevel(int data, Node root) {
+		if (root == null) {
+			return -1;
+		} else if (root.data == data) {
+			return 0;
+		} else {
+			int left = printLevel(data, root.left);
+			if (left >= 0) {
+				return left + 1;
+			}
+
+			int right = printLevel(data, root.right);
+			if (right >= 0) {
+				return right + 1;
+			}
+			return right;
+		}
+	}
+
+	public boolean equals(BinaryTree tree) {
+		return equals(this.root, tree.root);
+	}
+
+	private boolean equals(Node root1, Node root2) {
+		if (root1 == null && root2 == null) {
+			return true;
+		} else if (root1 == null ^ root2 == null) {
+			return false;
+		} else if (root1.data != root2.data) {
+			return false;
+		} else {
+			boolean left = equals(root1.left, root2.left);
+			if (!left) {
+				return left;
+			}
+			boolean right = equals(root1.right, root2.right);
+			return right;
+		}
+	}
+
+	public boolean equalsV2(BinaryTree tree) {
+		return equalsV2(this.root, tree.root);
+	}
+
+	private boolean equalsV2(Node root1, Node root2) {
+		if (root1 == null && root2 == null) {
+			return true;
+		} else if (root1 == null ^ root2 == null) {
+			return false;
+		} else {
+			return ((root1.data == root2.data) && equalsV2(root1.left, root2.left)
+					&& equalsV2(root1.right, root2.right));
+		}
+	}
+
+	public boolean isMirror(BinaryTree tree) {
+		return isMirror(this.root, tree.root);
+	}
+
+	private boolean isMirror(Node root1, Node root2) {
+		if (root1 == null && root2 == null) {
+			return true;
+		} else if (root1 == null ^ root2 == null) {
+			return false;
+		} else {
+			return ((root1.data == root2.data) && isMirror(root1.left, root2.right)
+					&& isMirror(root1.right, root2.left));
+		}
+	}
+
+	public BinaryTree createMirror() {
+		Node newRoot = createMirror(root);
+		return new BinaryTree(newRoot);
+	}
+
+	private Node createMirror(Node root) {
+		if (root == null) {
+			return null;
+		} else {
+			Node left = createMirror(root.left);
+			Node right = createMirror(root.right);
+
+			Node node = new Node(root.data);
+			node.left = right;
+			node.right = left;
+			return node;
+		}
+	}
+
+	public void convertToMirror() {
+		convertToMirror(root);
+	}
+
+	private void convertToMirror(Node root) {
+		if (root == null) {
+			return;
+		} else if (isLeaf(root)) {
+			return;
+		} else {
+			convertToMirror(root.left);
+			convertToMirror(root.right);
+			Node tmp = root.left;
+			root.left = root.right;
+			root.right = tmp;
+			return;
+		}
+	}
+
+	public void printPaths() {
+		int[] arr = new int[getHeight() + 1];
+		printPaths(root, arr, 0);
+	}
+
+	private void printPaths(Node root, int[] arr, int index) {
+		if (root == null) {
+			return;
+		} else {
+			arr[index] = root.data;
+			index++;
+
+			if (isLeaf(root)) {
+				for (int i = 0; i < index; i++) {
+					System.out.print(arr[i] + " ");
+				}
+				System.out.println();
+				return;
+			} else {
+				printPaths(root.left, arr, index);
+				printPaths(root.right, arr, index);
+			}
+		}
+	}
+
+	public int getMaxDiameterV1() {
+		return getMaxDiameterV1(root);
+	}
+
+	private int getMaxDiameterV1(Node root) {
+		if (root == null) {
+			return 0;
+		} else {
+			int leftDia = getMaxDiameterV1(root.left);
+			int rightDia = getMaxDiameterV1(root.right);
+
+			int left = getHeight(root.left) + 1;
+			int right = getHeight(root.right) + 1;
+			return Math.max(left + right + 1, Math.max(leftDia, rightDia));
+		}
+	}
+
+	public int getMaxDiameterV2() {
+		diameter = 0;
+		getMaxDiameterV2(root);
+		return diameter;
+	}
+
+	private int getMaxDiameterV2(Node root) {
+		if (root == null) {
+			return 0;
+		} else {
+			int left = getMaxDiameterV2(root.left);
+			int right = getMaxDiameterV2(root.right);
+
+			if (left + right + 1 > diameter) {
+				diameter = left + right + 1;
+			}
+			return Math.max(left, right) + 1;
+		}
+	}
+
+	public int getMaxDiameterV3() {
+		DiaHeight diaHeight = getMaxDiaMeterV3(root);
+		return diaHeight.getMaxDia();
+	}
+
+	private DiaHeight getMaxDiaMeterV3(Node root) {
+		if (root == null) {
+			return new DiaHeight(0, 0);
+		} else {
+			DiaHeight left = getMaxDiaMeterV3(root.left);
+			DiaHeight right = getMaxDiaMeterV3(root.right);
+
+			// calculating height of the current position of the node
+			int height = 1 + Math.max(left.getHeight(), right.getHeight());
+
+			// calculating maxDia by comparing it with left and right diameters
+			int maxDia = Math.max(left.getHeight() + right.getHeight() + 1,
+					Math.max(left.getMaxDia(), right.getMaxDia()));
+
+			return new DiaHeight(height, maxDia);
 		}
 	}
 }
