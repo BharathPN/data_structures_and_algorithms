@@ -4,12 +4,17 @@ public class QuickSort {
 
 	public static void main(String[] args) {
 		int[] arr = { 25, 30, 19, 13, 7, 15, 11 };
-		quickSort(arr, 0, arr.length - 1);
+		arr = quickSort(arr);
 		for (int data : arr) {
 			System.out.print(data + " ");
 		}
 	}
 
+	public static int[] quickSort(int[] arr) {
+		quickSort(arr, 0, arr.length - 1);
+		return arr;
+	}
+	
 	private static void quickSort(int[] arr, int start, int end) {
 		if (start >= end) {
 			return;

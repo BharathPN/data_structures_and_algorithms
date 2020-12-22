@@ -54,10 +54,10 @@ public class BinarySearchTree {
 	private Node delete(Node root, int data) {
 		if (root == null) {
 			return null;
-		} else if (root.getData() > data) {
+		} else if (data < root.getData()) {
 			root.setLeft(delete(root.getLeft(), data));
 			return root;
-		} else if (root.getData() < data) {
+		} else if (data > root.getData()) {
 			root.setRight(delete(root.getRight(), data));
 			return root;
 		} else {

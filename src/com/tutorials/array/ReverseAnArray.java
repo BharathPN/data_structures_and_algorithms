@@ -29,7 +29,7 @@ public class ReverseAnArray {
 		}
 		arr1 = arr;
 	}
-	
+
 	/*
 	 * Reverse approach 2 Time Complexity : O(n/2) Space Complexity : O(1)
 	 */
@@ -42,9 +42,9 @@ public class ReverseAnArray {
 	}
 
 	private static void swap(int i, int j) {
-		 i = i ^ j;
-		 j = i ^ j;
-		 i = i ^ j;
+		i = i ^ j;
+		j = i ^ j;
+		i = i ^ j;
 	}
 
 	private static void print(int[] arr1) {
@@ -53,6 +53,5 @@ public class ReverseAnArray {
 		}
 		System.out.println();
 	}
-
 
 }

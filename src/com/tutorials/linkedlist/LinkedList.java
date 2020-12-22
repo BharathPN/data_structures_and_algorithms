@@ -134,32 +134,38 @@ public class LinkedList<T> implements Iterable<T> {
 	}
 
 	void reverseLinkedList() {
-		if (head == null) {
-			System.out.println("Please add atleast one element");
-			return;
-		} else if (head.getNext() == null) {
-			System.out.println("Only one element cannot reverse");
-		} else if (head.getNext().getNext() == null) {
-			Node<T> tmp = head.getNext();
-			tmp.setNext(head);
-			head.setNext(null);
-			head = tmp;
-		} else {
-			Node<T> prev = head;
-			Node<T> cur = head.getNext();
-			Node<T> next = head.getNext().getNext();
-			while (next != null) {
-				cur.setNext(prev);
-				prev = cur;
-				cur = next;
-				next = next.getNext();
-			}
-			cur.setNext(prev);
-			head.setNext(null);
-			head = cur;
+		// Set prev node with null and current with head
+		Node<T> prev = null;
+		Node<T> current = head;
+		while (current != null) {
+			// set temp node to current.next
+			Node<T> temp = current.getNext();
+			// Point current.next to prev
+			current.setNext(prev);
+			// move prev and current by one
+			prev = current;
+			current = temp;
 		}
+		// set head node with prev
+		head = prev;
 	}
 
+	public void reverseRecursive() {
+		Node<T> prev = null;
+		// Node current = head;
+		reverseRec(prev, head);
+	}
+
+	private void reverseRec(Node<T> prev, Node<T> current) {
+		if (null == current) {
+			head = prev;
+			return;
+		}
+		Node<T> temp = current.getNext();
+		current.setNext(prev);
+		reverseRec(current, temp);
+	}
+	
 //	void insertInAscending(T data) {
 //		Node<T> n = new Node<T>(data);
 //		++size;

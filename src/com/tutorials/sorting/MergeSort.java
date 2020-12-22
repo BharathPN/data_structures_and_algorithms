@@ -4,13 +4,18 @@ public class MergeSort {
 
 	public static void main(String[] args) {
 		int[] arr = { 25, 30, 19, 13, 7, 15, 11, 20 };
-		mergeSort(arr, 0, arr.length - 1);
+		arr = mergeSort(arr);
 		for (int data : arr) {
 			System.out.print(data + " ");
 		}
 	}
 
-	public static void mergeSort(int[] arr, int low, int high) {
+	public static int[] mergeSort(int[] arr) {
+		mergeSort(arr, 0, arr.length - 1);
+		return arr;
+	}
+	
+	private static void mergeSort(int[] arr, int low, int high) {
 		int[] temp = new int[(high - low) + 1];
 		mergeSort(arr, low, high, temp);
 	}

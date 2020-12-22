@@ -1,6 +1,11 @@
 package com.tutorials.array;
 
 // Question : Maximum and minimum of an array using minimum number of comparisons
+/*
+ * Ugliest algorithm is to sort an entire array and take out minimum and maximum elements
+ * overall time complexity will be O(nlogn) (for sorting) + O(1) (for getting Min and Max) 
+ */
+
 public class MaxAndMinOfAnArray {
 
 	static class Pair {
@@ -23,22 +28,62 @@ public class MaxAndMinOfAnArray {
 		printPair(pair);
 		pair = getMinAndMax2(arr2, 0, arr2.length - 1);
 		printPair(pair);
-		
-		pair = getMinAndMax3(arr1);
+
+		pair = getMinAndMax3(arr1, arr1.length);
 		printPair(pair);
-		pair = getMinAndMax3(arr2);
+		pair = getMinAndMax3(arr2, arr2.length);
 		printPair(pair);
 
-	}
-
-	private static Pair getMinAndMax3(int[] arr1) {
-		
-		return null;
 	}
 
 	/*
-	 * Since it is recursive solution (Divide and Conquer)
-	 * Time Complexity : O(n/2) Space Complexity : O(2)
+	 * Time Complexity: O(n) In this method, the total number of comparisons is 1 +
+	 * 2(n-2) in the worst case and 1 + n – 2 in the best case. In the above
+	 * implementation, the worst case occurs when elements are sorted in descending
+	 * order and the best case occurs when elements are sorted in ascending order.
+	 */
+	private static Pair getMinAndMax1(int[] arr) {
+		Pair pair = new Pair();
+
+		if (arr == null && arr.length == 0) {
+			throw new NullPointerException("Array size is either null or empty");
+		}
+		if (arr.length == 1) {
+			pair.min = arr[0];
+			pair.max = arr[0];
+		} else {
+			if (arr[0] > arr[1]) {
+				pair.max = arr[0];
+				pair.min = arr[1];
+			} else {
+				pair.max = arr[1];
+				pair.min = arr[0];
+			}
+
+			for (int i = 2; i < arr.length; i++) {
+				if (pair.min > arr[i]) {
+					pair.min = arr[i];
+				}
+				if (arr[i] > pair.max) {
+					pair.max = arr[i];
+				}
+			}
+		}
+		return pair;
+	}
+
+	/*
+	 * Time Complexity: O(n)
+	 * 
+	 * Total number of comparisons: let the number of comparisons be T(n). T(n) can
+	 * be written as follows: Algorithmic Paradigm: Divide and Conquer 
+	 * T(n) = T(floor(n/2)) + T(ceil(n/2)) + 2 
+	 * T(2) = 1 
+	 * T(1) = 0
+	 * 
+	 * T(n) = 2T(n/2) + 2 After solving the above recursion, we get T(n) = 3n/2 -2
+	 * Thus, the approach does 3n/2 -2 comparisons if n is a power of 2. And it does
+	 * more than 3n/2 -2 comparisons if n is not a power of 2.
 	 */
 	private static Pair getMinAndMax2(int[] arr, int low, int high) {
 		Pair pair, mml, mmr;
@@ -77,35 +122,60 @@ public class MaxAndMinOfAnArray {
 		}
 	}
 
-	/*
-	 * Since we have to linearly traverse through all the elements Total Time
-	 * Complexity : O(n) Space Complexity : O(1)
-	 */
-	private static Pair getMinAndMax1(int[] arr) {
-		Pair pair = new Pair();
-
-		if (arr.length == 1) {
-			pair.min = arr[0];
-			pair.max = arr[0];
-		} else {
+	private static Pair getMinAndMax3(int[] arr, int n) {
+		Pair minmax = new Pair();
+		int i;
+		/*
+		 * If array has even number of elements then initialize the first two elements
+		 * as minimum and maximum
+		 */
+		if (n % 2 == 0) {
 			if (arr[0] > arr[1]) {
-				pair.max = arr[0];
-				pair.min = arr[1];
+				minmax.max = arr[0];
+				minmax.min = arr[1];
 			} else {
-				pair.max = arr[1];
-				pair.min = arr[0];
+				minmax.min = arr[0];
+				minmax.max = arr[1];
 			}
-
-			for (int i = 2; i < arr.length; i++) {
-				if (pair.min > arr[i]) {
-					pair.min = arr[i];
-				}
-				if (arr[i] > pair.max) {
-					pair.max = arr[i];
-				}
-			}
+			i = 2;
+			/* set the starting index for loop */
+		} /*
+			 * If array has odd number of elements then initialize the first element as
+			 * minimum and maximum
+			 */ else {
+			minmax.min = arr[0];
+			minmax.max = arr[0];
+			i = 1;
+			/* set the starting index for loop */
 		}
-		return pair;
+
+		/*
+		 * In the while loop, pick elements in pair and compare the pair with max and
+		 * min so far
+		 */
+		while (i < n - 1) {
+			if (arr[i] > arr[i + 1]) {
+				if (arr[i] > minmax.max) {
+					minmax.max = arr[i];
+				}
+				if (arr[i + 1] < minmax.min) {
+					minmax.min = arr[i + 1];
+				}
+			} else {
+				if (arr[i + 1] > minmax.max) {
+					minmax.max = arr[i + 1];
+				}
+				if (arr[i] < minmax.min) {
+					minmax.min = arr[i];
+				}
+			}
+			/*
+			 * Increment the index by 2 as two elements are processed in loop
+			 */
+			i += 2;
+		}
+
+		return minmax;
 	}
 
 	private static void printPair(Pair pair) {

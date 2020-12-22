@@ -5,14 +5,14 @@ public class InsertionSort {
 	public static void main(String[] args) {
 		int[] arr = { 25, 30, 19, 13, 7, 15, 11 };
 
-		insertionSort(arr);
+		arr = insertionSort(arr);
 
 		for (int data : arr) {
 			System.out.print(data + " ");
 		}
 	}
 
-	private static void insertionSort(int[] arr) {
+	private static int[] insertionSort(int[] arr) {
 		for (int i = 1; i < arr.length; i++) {
 			int value = arr[i];
 			int hole = i;
@@ -22,5 +22,6 @@ public class InsertionSort {
 			}
 			arr[hole] = value;
 		}
+		return arr;
 	}
 }
